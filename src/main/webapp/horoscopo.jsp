@@ -16,8 +16,8 @@
         <h1>Horóscopo</h1>
         <form action="horoscopo" method="post">
             <%
-                ArrayList<String> meses = (ArrayList<String>)request.getAttribute("meses");
-                ArrayList<String> dias = (ArrayList<String>)request.getAttribute("dias");
+                ArrayList<String> meses = (ArrayList<String>) request.getAttribute("meses");
+                ArrayList<String> dias = (ArrayList<String>) request.getAttribute("dias");
                 String dia = (String) request.getAttribute("dia");
                 if (dia == null){
                     dia = "1";

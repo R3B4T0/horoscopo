@@ -29,6 +29,9 @@ public class horoscopo extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    private ArrayList<String> meses = Utilidades.getMeses();
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -61,10 +64,8 @@ public class horoscopo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<String> meses = Utilidades.getMeses();
-        request.setAttribute("meses", meses);
-        ArrayList<String> dias = Utilidades.getDias();
-        request.setAttribute("dias", dias);
+        request.setAttribute("meses", this.meses);
+        request.setAttribute("dias", Utilidades.getDias());
         request.getRequestDispatcher("horoscopo.jsp").forward(request, response);
     }
 
@@ -79,18 +80,16 @@ public class horoscopo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<String> dias = Utilidades.getDias();
-        ArrayList<String> meses = Utilidades.getMeses();
-        request.setAttribute("dias", dias);
-        request.setAttribute("meses", meses);
+        request.setAttribute("dias", Utilidades.getDias());
+        request.setAttribute("meses", Utilidades.getMeses());
         String dia = request.getParameter("dia");
-        String mes = request.getParameter("mes");
-        String nombre = request.getParameter("nombre");
-        String signo = Utilidades.getSigno(Integer.parseInt(dia), Integer.parseInt(mes));
         request.setAttribute("dia", dia);
+        String mes = request.getParameter("mes");
         request.setAttribute("mes", mes);
+        String nombre = request.getParameter("nombre");
         request.setAttribute("nombre", nombre);
-        request.setAttribute("signo", signo);
+        Utilidades signo = new Utilidades();
+        request.setAttribute("signo", signo.getSigno(Integer.parseInt(dia), Integer.parseInt(mes)));
         request.getRequestDispatcher("horoscopo.jsp").forward(request, response);
         
     }
